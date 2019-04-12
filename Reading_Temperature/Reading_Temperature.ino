@@ -27,25 +27,28 @@ void loop()
 { 
     int analogValue;
     float temperature;
+    float voltage_v0;
     float temperature_f;
+    float ADC;
     
     // read our temperature sensor; analogRead outputs a 10-bit value from the Arduino ADC (analog to digital converter)
     // ADC reads anything from ground to 5V, converts to digital, 10-bit number is proportional 
-    analogValue = analogRead(lm35Pin);
+    ADC = analogRead(lm35Pin);
 
     // 10bit analog value (next few lines converts it to celcius)
-
-    temperature = float(analogValue) / 1023;
     
-    //input of 5V
-    float VCC = 5;
+    // input of 5V
+    float VCC = 5.0;
+    
+    // this is scaled so voltage_v0 is between 0 and 5 (voltage on A0 pin)
+    // voltage_v0 is the voltage on A0
+    voltage_v0 = (float(ADC) / 1023.0) * VCC;    
     
     // temp goes up .01V per 1 deg. celcius
-    float dC = VCC / .01;
+    float dC = voltage_v0 / .01;  
     
-    temperature = temperature * dC;
-    
-    temperature_f = temperature * (9.0/5.0) + 32.0;
+    // us-farenheit
+    temperature_f = dC * (9.0/5.0) + 32.0;
 
     // print the temperature over serial
     Serial.print("Temp: ");
