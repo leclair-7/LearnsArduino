@@ -47,7 +47,7 @@ void loop()
     // temp goes up .01V per 1 deg. celcius
     float dC = voltage_v0 / .01;  
     
-    // us-farenheit
+    // US - farenheit
     temperature_f = dC * (9.0/5.0) + 32.0;
 
     // print the temperature over serial
