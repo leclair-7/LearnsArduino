@@ -47,7 +47,7 @@ void loop()
     // read the potentiometer
     int potReading = analogRead(potPin);
     
-    Serial.println(potReading);
+    //Serial.println(potReading);
     
     // map the result to a range from 0 to the number of LEDs
     int ledLevel = map(potReading, 0, 1023, 0, ledCount);
@@ -57,6 +57,9 @@ void loop()
     {
         // if the array element's index is less than ledLevel
         // turn the pin for this element on
+        Serial.println(ledLevel);
+        if( ledLevel > ledCount-1) ledLevel = ledCount-1;
+        
         if (thisLed == ledLevel )
         {
             digitalWrite(ledPins[thisLed], HIGH);
